@@ -3,10 +3,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Graph;
+using OneDriveProject.Logic.Helpers;
 
-namespace OneDriveProject
+namespace OneDriveProject.Logic.Controllers
 {
-    class GraphController
+    public class GraphController
     {
         private static string ClientId = "fb48b449-d992-40e6-9d61-7a516c1e3b61";
         private static PublicClientApplication _clientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());

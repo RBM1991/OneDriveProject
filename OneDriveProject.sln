@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneDriveProject", "OneDriveProject\OneDriveProject.csproj", "{7CFEFA46-40EA-4369-92E8-C75E5043A7B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneDriveProject.Logic", "OneDriveProject.Logic\OneDriveProject.Logic.csproj", "{42474839-1063-4643-85E5-C1001B627E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneDriveProject.Data", "OneDriveProject.Data\OneDriveProject.Data.csproj", "{5ADD2158-E184-4281-87FA-A3E7D15AE31B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7CFEFA46-40EA-4369-92E8-C75E5043A7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CFEFA46-40EA-4369-92E8-C75E5043A7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CFEFA46-40EA-4369-92E8-C75E5043A7B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42474839-1063-4643-85E5-C1001B627E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42474839-1063-4643-85E5-C1001B627E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42474839-1063-4643-85E5-C1001B627E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42474839-1063-4643-85E5-C1001B627E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ADD2158-E184-4281-87FA-A3E7D15AE31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ADD2158-E184-4281-87FA-A3E7D15AE31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ADD2158-E184-4281-87FA-A3E7D15AE31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ADD2158-E184-4281-87FA-A3E7D15AE31B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

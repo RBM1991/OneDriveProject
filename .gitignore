@@ -4,3 +4,7 @@ OneDriveProject/bin/
 OneDriveProject/obj/
 packages/
 .vs/
+OneDriveProject.Logic/obj/
+OneDriveProject.Logic/bin/
+OneDriveProject.Data/obj/Debug/OneDriveProject.Data.csproj.FileListAbsolute.txt
+OneDriveProject.Data/obj/

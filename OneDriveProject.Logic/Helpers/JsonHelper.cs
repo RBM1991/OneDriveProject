@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneDriveProject
+namespace OneDriveProject.Logic.Helpers
 {
     // Copied from http://stackoverflow.com/questions/4580397/json-formatter-in-c
-    class JsonHelper
+    public class JsonHelper
     {
         private const string INDENT_STRING = "    ";
 

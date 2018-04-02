@@ -1,9 +1,9 @@
 ﻿using Microsoft.Identity.Client;
 using System.IO;
 
-namespace OneDriveProject
+namespace OneDriveProject.Logic.Helpers
 {
-    class TokenCacheHelper
+    public class TokenCacheHelper
     {
         static TokenCache usertokenCache;
 
