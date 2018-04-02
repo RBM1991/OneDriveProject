@@ -5,19 +5,20 @@ using System.Threading.Tasks;
 using OneDriveProject.Logic.Helpers;
 using Newtonsoft.Json;
 using OneDriveProject.Data.Models;
+using OneDriveProject.Logic.Interfaces;
 
 namespace OneDriveProject.Logic.Controllers
 {
-    public class GraphController
+    public class GraphController : IGraphController
     {
         private static string ClientId = "fb48b449-d992-40e6-9d61-7a516c1e3b61";
-        private static PublicClientApplication _clientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());
+        private PublicClientApplication _clientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());
         static string graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
         static string myFiles = "https://graph.microsoft.com/v1.0/me/drive/root/children";
         static string[] scopes = new string[] { "Files.ReadWrite.All" };
         //static AuthenticationResult authResult = null;
 
-        public static PublicClientApplication PublicClientApp
+        public PublicClientApplication PublicClientApp
         {
             get
             {
@@ -25,7 +26,7 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
-        public static async void SignIn()
+        public async void SignIn()
         {
 
             AuthenticationResult authResult = null;
@@ -73,7 +74,7 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
-        public static void SignOut()
+        public void SignOut()
         {
             if (PublicClientApp.Users.Any())
             {
@@ -92,30 +93,32 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
-        public static async Task<OneDriveUser> GetHttpContentWithToken(string url, string token)
-        {
-            var httpClient = new System.Net.Http.HttpClient();
-            System.Net.Http.HttpResponseMessage response;
-            try
+        public async Task<OneDriveUser> GetHttpContentWithToken(string url, string token)
+        {           
+            using (var httpClient = new System.Net.Http.HttpClient())
             {
-                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, url);
-                //Add the token in Authorization header
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                response = await httpClient.SendAsync(request);
-                var content = await response.Content.ReadAsStringAsync();
+                System.Net.Http.HttpResponseMessage response;
+                try
+                {
+                    var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, url);
+                    //Add the token in Authorization header
+                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    response = await httpClient.SendAsync(request);
+                    var content = await response.Content.ReadAsStringAsync();
 
-                var model = JsonConvert.DeserializeObject<OneDriveUser>(content);
+                    var model = JsonConvert.DeserializeObject<OneDriveUser>(content);
 
-                return model;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetHttpContentWithToken failed with exception: " + ex.Message);
-                return null;
-            }
+                    return model;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("GetHttpContentWithToken failed with exception: " + ex.Message);
+                    return null;
+                }
+            }           
         }
 
-        public static async Task getMyFilesAsync()
+        public async Task getMyFilesAsync()
         {
 
 
@@ -123,7 +126,7 @@ namespace OneDriveProject.Logic.Controllers
 
         }
 
-        public static void DisplayBasicTokenInfo(AuthenticationResult authResult)
+        public void DisplayBasicTokenInfo(AuthenticationResult authResult)
         {
             //TokenInfoText.Text = "";
             if (authResult != null)

@@ -59,6 +59,8 @@
     <Compile Include="Controllers\GraphController.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\TokenCacheHelper.cs" />
+    <Compile Include="Interfaces\IGraphController.cs" />
+    <Compile Include="Interfaces\IUserInteraction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
