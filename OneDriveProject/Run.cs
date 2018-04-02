@@ -8,7 +8,7 @@ namespace OneDriveProject
     {
         static void Main(string[] args)
         {
-            GraphController.SignOut();
+            //GraphController.SignOut();
             GraphController.SignIn();
             Console.ReadLine();
         }

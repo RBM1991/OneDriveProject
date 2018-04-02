@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Graph;
 using OneDriveProject.Logic.Helpers;
+using Newtonsoft.Json;
+using OneDriveProject.Data.Models;
 
 namespace OneDriveProject.Logic.Controllers
 {
@@ -57,7 +58,14 @@ namespace OneDriveProject.Logic.Controllers
 
             if (authResult != null)
             {
-                Console.WriteLine(await GetHttpContentWithToken(graphAPIEndpoint, authResult.AccessToken));
+
+                var model = await GetHttpContentWithToken(graphAPIEndpoint, authResult.AccessToken);
+
+                if(model != null)
+                {
+                    Console.WriteLine($"Authentication success for user: DisplayName: { model.DisplayName } , Email: { model.UserPrincipalName }");
+                }
+
                 //Console.WriteLine(await GetHttpContentWithToken());
                 //DisplayBasicTokenInfo(authResult);
                 //this.SignOutButton.Visibility = Visibility.Visible;
@@ -84,7 +92,7 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
-        public static async Task<string> GetHttpContentWithToken(string url, string token)
+        public static async Task<OneDriveUser> GetHttpContentWithToken(string url, string token)
         {
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpResponseMessage response;
@@ -95,12 +103,15 @@ namespace OneDriveProject.Logic.Controllers
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 response = await httpClient.SendAsync(request);
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonHelper.FormatJson(content);
-                //return content;
+
+                var model = JsonConvert.DeserializeObject<OneDriveUser>(content);
+
+                return model;
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                Console.WriteLine("GetHttpContentWithToken failed with exception: " + ex.Message);
+                return null;
             }
         }
 
