@@ -1,0 +1,6 @@
+.vs/OneDriveProject/v15/.suo
+*.dll
+OneDriveProject/bin/
+OneDriveProject/obj/
+packages/
+.vs/
