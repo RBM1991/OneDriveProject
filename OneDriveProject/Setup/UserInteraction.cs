@@ -11,7 +11,7 @@ namespace OneDriveProject.Setup
     {
         public void Setup(IGraphController controller)
         {
-            Console.WriteLine("Welcome to OneDrive program. Do you want to sign out first? y/n");
+            Console.WriteLine("Welcome\nDo you wish to log in? Y/N");
             var consoleAction = Console.ReadLine();
 
             if (consoleAction.ToLower() == "y")

@@ -15,7 +15,5 @@ namespace OneDriveProject.Logic.Interfaces
         void SignOut();
 
         Task<OneDriveUser> GetHttpContentWithToken(string url, string token);
-
-        void DisplayBasicTokenInfo(AuthenticationResult authResult);
     }
 }

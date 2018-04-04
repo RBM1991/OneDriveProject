@@ -19,25 +19,29 @@ namespace OneDriveProject.Data.Models
         [JsonProperty("givenName")]
         public string GivenName { get; set; }
 
+        [JsonProperty("id")]
         public string Id { get; set; }
 
+        [JsonProperty("userPrincipalName")]
         public string UserPrincipalName { get; set; }
 
+        [JsonProperty("bussinessPhones")]
         public string[] BusinessPhones { get; set; }
 
+        [JsonProperty("jobTitle")]
         public string JobTitle { get; set; }
 
+        [JsonProperty("mail")]
         public string Mail { get; set; }
 
+        [JsonProperty("mobilePhone")]
         public string MobilePhone { get; set; }
 
+        [JsonProperty("officeLocation")]
         public string OfficeLocation { get; set; }
 
+        [JsonProperty("PreferredLanguage")]
         public string PreferredLanguage { get; set; }
     }
 }
-
-//{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users/$entity","displayName":"Rasmus Bjerg Mogensen","surname"
-//:"Bjerg Mogensen","givenName":"Rasmus","id":"676b5cb7b65ba097","userPrincipalName":"rasmusbjergmogensen@gmail.com","businessPhones":[],"
-//jobTitle":null,"mail":null,"mobilePhone":null,"officeLocation":null,"preferredLanguage":null}
 

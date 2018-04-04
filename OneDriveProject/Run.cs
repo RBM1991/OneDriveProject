@@ -11,30 +11,15 @@ namespace OneDriveProject
     {
         static void Main(string[] args)
         {
-            //GraphController.SignOut();
+            var di = DependencyInjector.Get();
 
-            var kernel = ConfigureDependencyInjection.Get().InitializeDependencyInjection();
+            var controller = di.GetDependency<IGraphController>();
 
-            var controller = kernel.Get<IGraphController>();
-
-            var uI = kernel.Get<IUserInteraction>();
+            var uI = di.GetDependency<IUserInteraction>();
 
             uI.Setup(controller);
 
             Console.ReadLine();
         }
-
-        //public static void Setup(IGraphController controller)
-        //{
-        //    Console.WriteLine("Welcome to OneDrive program. Do you want to sign out first? y/n");
-        //    var consoleAction = Console.ReadLine();
-
-        //    if(consoleAction.ToLower() == "y")
-        //    {
-        //        controller.SignOut();
-        //    }
-
-        //    controller.SignIn();
-        //}
     }
 }

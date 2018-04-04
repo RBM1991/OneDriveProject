@@ -16,7 +16,7 @@ namespace OneDriveProject.Logic.Controllers
         static string graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
         static string myFiles = "https://graph.microsoft.com/v1.0/me/drive/root/children";
         static string[] scopes = new string[] { "Files.ReadWrite.All" };
-        //static AuthenticationResult authResult = null;
+
 
         public PublicClientApplication PublicClientApp
         {
@@ -26,6 +26,7 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
+        //Acquires the user token
         public async void SignIn()
         {
 
@@ -34,12 +35,12 @@ namespace OneDriveProject.Logic.Controllers
             
             try
             {
+                //Tries to acquire the token without the user having to log in
                 authResult = await app.AcquireTokenSilentAsync(scopes, app.Users.FirstOrDefault());
             }
             catch (MsalUiRequiredException ex)
             {
-                // A MsalUiRequiredException happened on AcquireTokenSilentAsync. 
-                // This indicates you need to call AcquireTokenAsync to acquire a token
+                //Indicates you need to call AcquireTokenAsync to acquire a token
                 System.Diagnostics.Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
 
                 try
@@ -60,20 +61,17 @@ namespace OneDriveProject.Logic.Controllers
             if (authResult != null)
             {
 
+                //
                 var model = await GetHttpContentWithToken(graphAPIEndpoint, authResult.AccessToken);
 
                 if(model != null)
                 {
-                    Console.WriteLine($"Authentication success for user: DisplayName: { model.DisplayName } , Email: { model.UserPrincipalName }");
+                    Console.WriteLine($"\nAuthentication success. \n\nName: { model.DisplayName }\nUsername: { model.UserPrincipalName }");
                 }
-
-                //Console.WriteLine(await GetHttpContentWithToken());
-                //DisplayBasicTokenInfo(authResult);
-                //this.SignOutButton.Visibility = Visibility.Visible;
-                //DisplayBasicTokenInfo(authResult);
             }
         }
 
+        //Removes the user 
         public void SignOut()
         {
             if (PublicClientApp.Users.Any())
@@ -81,10 +79,6 @@ namespace OneDriveProject.Logic.Controllers
                 try
                 {
                     PublicClientApp.Remove(PublicClientApp.Users.FirstOrDefault());
-                    //this.ResultText.Text = "User has signed-out";
-                    //this.CallGraphButton.Visibility = Visibility.Visible;
-                    //this.SignOutButton.Visibility = Visibility.Collapsed;
-                    //Console.WriteLine("Signed out");
                 }
                 catch (MsalException ex)
                 {
@@ -93,6 +87,7 @@ namespace OneDriveProject.Logic.Controllers
             }
         }
 
+        //Sends http get request and deserializes the response
         public async Task<OneDriveUser> GetHttpContentWithToken(string url, string token)
         {           
             using (var httpClient = new System.Net.Http.HttpClient())
@@ -101,7 +96,6 @@ namespace OneDriveProject.Logic.Controllers
                 try
                 {
                     var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, url);
-                    //Add the token in Authorization header
                     request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     response = await httpClient.SendAsync(request);
                     var content = await response.Content.ReadAsStringAsync();
@@ -117,79 +111,6 @@ namespace OneDriveProject.Logic.Controllers
                 }
             }           
         }
-
-        public async Task getMyFilesAsync()
-        {
-
-
-            //Console.WriteLine(await GetHttpContentWithToken(myFiles, authResult.AccessToken));
-
-        }
-
-        public void DisplayBasicTokenInfo(AuthenticationResult authResult)
-        {
-            //TokenInfoText.Text = "";
-            if (authResult != null)
-            {
-                Console.WriteLine($"Name: {authResult.User.Name}");
-                Console.WriteLine($"Username: {authResult.User.DisplayableId}");
-            }
-        }
-
-
-
-        /*public static class TokenCacheHelper
-        {
-
-            /// <summary>
-            /// Get the user token cache
-            /// </summary>
-            /// <returns></returns>
-            public static TokenCache GetUserCache()
-            {
-                if (usertokenCache == null)
-                {
-                    usertokenCache = new TokenCache();
-                    usertokenCache.SetBeforeAccess(BeforeAccessNotification);
-                    usertokenCache.SetAfterAccess(AfterAccessNotification);
-                }
-                return usertokenCache;
-            }
-
-            static TokenCache usertokenCache;
-
-            /// <summary>
-            /// Path to the token cache
-            /// </summary>
-            public static string CacheFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "msalcache.txt";
-
-            private static readonly object FileLock = new object();
-
-            public static void BeforeAccessNotification(TokenCacheNotificationArgs args)
-            {
-                lock (FileLock)
-                {
-                    args.TokenCache.Deserialize(File.Exists(CacheFilePath)
-                        ? File.ReadAllBytes(CacheFilePath)
-                        : null);
-                }
-            }
-
-            public static void AfterAccessNotification(TokenCacheNotificationArgs args)
-            {
-                // if the access operation resulted in a cache update
-                if (args.TokenCache.HasStateChanged)
-                {
-                    lock (FileLock)
-                    {
-                        // reflect changesgs in the persistent store
-                        File.WriteAllBytes(CacheFilePath, args.TokenCache.Serialize());
-                        // once the write operationtakes place restore the HasStateChanged bit to filse
-                        args.TokenCache.HasStateChanged = false;
-                    }
-                }
-            }
-        }*/
     }
 
 }

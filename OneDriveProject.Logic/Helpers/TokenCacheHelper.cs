@@ -7,10 +7,7 @@ namespace OneDriveProject.Logic.Helpers
     {
         static TokenCache usertokenCache;
 
-        /// <summary>
-        /// Get the user token cache
-        /// </summary>
-        /// <returns></returns>
+
         public static TokenCache GetUserCache()
         {
             if (usertokenCache == null)
@@ -22,9 +19,6 @@ namespace OneDriveProject.Logic.Helpers
             return usertokenCache;
         }
 
-        /// <summary>
-        /// Path to the token cache
-        /// </summary>
         public static string CacheFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "msalcache.txt";
 
         private static readonly object FileLock = new object();
@@ -41,14 +35,14 @@ namespace OneDriveProject.Logic.Helpers
 
         public static void AfterAccessNotification(TokenCacheNotificationArgs args)
         {
-            // if the access operation resulted in a cache update
+            //if the access operation resulted in a cache update
             if (args.TokenCache.HasStateChanged)
             {
                 lock (FileLock)
                 {
-                    // reflect changesgs in the persistent store
+                    //reflect changes in the persistent store
                     File.WriteAllBytes(CacheFilePath, args.TokenCache.Serialize());
-                    // once the write operationtakes place restore the HasStateChanged bit to filse
+                    //once the write operationtakes place restore the HasStateChanged bit to filse
                     args.TokenCache.HasStateChanged = false;
                 }
             }

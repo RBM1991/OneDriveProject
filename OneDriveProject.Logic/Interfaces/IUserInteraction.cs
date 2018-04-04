@@ -8,8 +8,6 @@ namespace OneDriveProject.Logic.Interfaces
 {
     public interface IUserInteraction
     {
-
         void Setup(IGraphController controller);
-
     }
 }
