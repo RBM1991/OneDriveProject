@@ -60,8 +60,6 @@ namespace OneDriveProject.Logic.Controllers
 
             if (authResult != null)
             {
-
-                //
                 var model = await GetHttpContentWithToken(graphAPIEndpoint, authResult.AccessToken);
 
                 if(model != null)
